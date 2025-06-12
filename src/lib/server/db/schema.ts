@@ -1,10 +1,14 @@
-import { pgTable, serial, text, integer, timestamp, boolean, json } from 'drizzle-orm/pg-core';
+import { pgTable, serial, text, integer, timestamp, boolean, json, pgEnum } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
+
+export const userType = pgEnum('user_type', ['artist', 'user']);
+export type UserType = typeof userType.enumValues[number];
 
 // Tables
 export const user = pgTable('user', {
 	id: text('id').primaryKey(),
 	username: text('username').notNull().unique(),
+	type: userType('type').default('user').notNull(),
 	passwordHash: text('password_hash').notNull()
 });
 

@@ -20,6 +20,9 @@ importers:
       drizzle-orm:
         specifier: ^0.40.0
         version: 0.40.1(gel@2.1.0)(postgres@3.4.7)
+      lucide-svelte:
+        specifier: ^0.514.0
+        version: 0.514.0(svelte@5.34.1)
       postgres:
         specifier: ^3.4.5
         version: 3.4.7
@@ -1164,6 +1167,11 @@ packages:
   locate-character@3.0.0:
     resolution: {integrity: sha512-SW13ws7BjaeJ6p7Q6CO2nchbYEc3X3J6WrmTTDto7yMPqVSZTUyY5Tjbid+Ab8gLnATtygYtiDIJGQRRn2ZOiA==}
 
+  lucide-svelte@0.514.0:
+    resolution: {integrity: sha512-fxvZu4srTezjMCM3Nzbofs1Bo/OW5F5ZhR9s41I4E/Yyic6Q90RUs6lMKfJX4iR8cULD4tFHybxvvHztI+Muqg==}
+    peerDependencies:
+      svelte: ^3 || ^4 || ^5.0.0-next.42
+
   magic-string@0.30.17:
     resolution: {integrity: sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA==}
 
@@ -2135,6 +2143,10 @@ snapshots:
       lightningcss-win32-x64-msvc: 1.30.1
 
   locate-character@3.0.0: {}
+
+  lucide-svelte@0.514.0(svelte@5.34.1):
+    dependencies:
+      svelte: 5.34.1
 
   magic-string@0.30.17:
     dependencies:
