@@ -1,15 +1,15 @@
 import { pgTable, serial, text, integer, timestamp, boolean, json, pgEnum } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 
-export const userType = pgEnum('user_type', ['artist', 'user']);
-export type UserType = typeof userType.enumValues[number];
+export const userRole = pgEnum('user_role', ['artist', 'user']);
+export type UserRole = typeof userRole.enumValues[number];
 
 // Tables
 export const user = pgTable('user', {
 	id: text('id').primaryKey(),
 	email: text('email').notNull().unique(),
 	username: text('username').notNull().unique(),
-	type: userType('type').default('user').notNull(),
+	role: userRole('role').default('user').notNull(),
 	passwordHash: text('password_hash').notNull()
 });
 
@@ -23,7 +23,12 @@ export const session = pgTable('session', {
 
 export const request = pgTable('request', {
 	id: serial('id').primaryKey(),
-	userId: text('user_id').references(() => user.id),
+	userId: text('user_id')
+		.notNull()
+		.references(() => user.id), // the client
+	designerId: text('designer_id')
+		.notNull()
+		.references(() => user.id), // the assigned designer
 	status: text('status').notNull(),
 	createdAt: timestamp('created_at', { withTimezone: true, mode: 'date' }).defaultNow(),
 	updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'date' }).defaultNow()
@@ -91,8 +96,12 @@ export const sessionRelations = relations(session, ({ one }) => ({
 }));
 
 export const requestRelations = relations(request, ({ one, many }) => ({
-	user: one(user, {
+	client: one(user, {
 		fields: [request.userId],
+		references: [user.id]
+	}),
+	designer: one(user, {
+		fields: [request.designerId],
 		references: [user.id]
 	}),
 	arts: many(art),

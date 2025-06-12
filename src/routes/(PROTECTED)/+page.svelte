@@ -7,7 +7,7 @@
 
 <h1>Hi, {data.user.username}!</h1>
 <p>Your user ID is {data.user.id}.</p>
-<p>User Type: {data.user.type}</p>
+<p>User Type: {data.user.role}</p>
 <form method="post" action="?/logout" use:enhance>
 	<button>Sign out</button>
 </form>

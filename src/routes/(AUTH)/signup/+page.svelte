@@ -87,8 +87,8 @@
 							<Users class="h-5 w-5 text-slate-400" />
 						</span>
 						<select
-							id="user_type"
-							name="user_type"
+							id="role"
+							name="role"
 							class="block w-full pl-12 pr-3 py-2.5 bg-white/50 border border-slate-200 rounded-lg text-slate-800 focus:outline-none focus:ring-2 focus:ring-pink-500/50 focus:border-pink-500 transition-all"
 						>
 							<option class="bg-white" value="user">I'm a User</option>

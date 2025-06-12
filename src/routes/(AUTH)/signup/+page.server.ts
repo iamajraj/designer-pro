@@ -19,7 +19,7 @@ export const actions: Actions = {
 		const username = formData.get('username');
 		const email = formData.get('email');
 		const password = formData.get('password');
-		const userType = formData.get('user_type');
+		const role = formData.get('role');
 
 		if (!validateUsername(username)) {
 			return fail(400, { message: 'Invalid username' });
@@ -27,7 +27,7 @@ export const actions: Actions = {
 		if (!validatePassword(password)) {
 			return fail(400, { message: 'Invalid password' });
 		}
-		if (!validateUserType(userType)) {
+		if (!validateUserRole(role)) {
 			return fail(400, { message: 'Invalid user type' });
 		}
 		if (!validateEmail(email)) {
@@ -45,7 +45,7 @@ export const actions: Actions = {
 		try {
 			await db
 				.insert(table.user)
-				.values({ id: userId, username, email, passwordHash, type: userType as table.UserType });
+				.values({ id: userId, username, email, passwordHash, role: role as table.UserRole });
 
 			const sessionToken = auth.generateSessionToken();
 			const session = await auth.createSession(sessionToken, userId);
@@ -77,10 +77,8 @@ function validatePassword(password: unknown): password is string {
 	return typeof password === 'string' && password.length >= 6 && password.length <= 255;
 }
 
-function validateUserType(userType: unknown): userType is string {
-	return (
-		typeof userType === 'string' && table.userType.enumValues.includes(userType as table.UserType)
-	);
+function validateUserRole(role: unknown): role is string {
+	return typeof role === 'string' && table.userRole.enumValues.includes(role as table.UserRole);
 }
 
 function validateEmail(email: unknown): email is string {
