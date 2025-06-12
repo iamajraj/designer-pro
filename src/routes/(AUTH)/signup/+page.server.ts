@@ -17,6 +17,7 @@ export const actions: Actions = {
 	register: async (event) => {
 		const formData = await event.request.formData();
 		const username = formData.get('username');
+		const email = formData.get('email');
 		const password = formData.get('password');
 		const userType = formData.get('user_type');
 
@@ -28,6 +29,9 @@ export const actions: Actions = {
 		}
 		if (!validateUserType(userType)) {
 			return fail(400, { message: 'Invalid user type' });
+		}
+		if (!validateEmail(email)) {
+			return fail(400, { message: 'Invalid email' });
 		}
 
 		const userId = generateUserId();
@@ -41,7 +45,7 @@ export const actions: Actions = {
 		try {
 			await db
 				.insert(table.user)
-				.values({ id: userId, username, passwordHash, type: userType as table.UserType });
+				.values({ id: userId, username, email, passwordHash, type: userType as table.UserType });
 
 			const sessionToken = auth.generateSessionToken();
 			const session = await auth.createSession(sessionToken, userId);
@@ -76,5 +80,11 @@ function validatePassword(password: unknown): password is string {
 function validateUserType(userType: unknown): userType is string {
 	return (
 		typeof userType === 'string' && table.userType.enumValues.includes(userType as table.UserType)
+	);
+}
+
+function validateEmail(email: unknown): email is string {
+	return (
+		typeof email === 'string' && /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)
 	);
 }

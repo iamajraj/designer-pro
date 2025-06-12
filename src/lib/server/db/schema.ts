@@ -7,6 +7,7 @@ export type UserType = typeof userType.enumValues[number];
 // Tables
 export const user = pgTable('user', {
 	id: text('id').primaryKey(),
+	email: text('email').notNull().unique(),
 	username: text('username').notNull().unique(),
 	type: userType('type').default('user').notNull(),
 	passwordHash: text('password_hash').notNull()

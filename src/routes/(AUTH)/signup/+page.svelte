@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import type { ActionData } from './$types';
-	import { User, Lock, Users } from 'lucide-svelte';
+	import { User, Lock, Users, Mail } from 'lucide-svelte';
 
 	let { form }: { form: ActionData } = $props();
 </script>
@@ -49,6 +49,20 @@
 							name="username"
 							type="text"
 							placeholder="Username"
+							required
+							class="block w-full pl-12 pr-3 py-2.5 bg-white/50 border border-slate-200 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-pink-500/50 focus:border-pink-500 transition-all"
+						/>
+					</div>
+
+					<div class="relative">
+						<span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+							<Mail class="h-5 w-5 text-slate-400" />
+						</span>
+						<input
+							id="email"
+							name="email"
+							type="email"
+							placeholder="Email"
 							required
 							class="block w-full pl-12 pr-3 py-2.5 bg-white/50 border border-slate-200 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-pink-500/50 focus:border-pink-500 transition-all"
 						/>
