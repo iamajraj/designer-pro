@@ -20,11 +20,15 @@
 	import { quintOut } from 'svelte/easing';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
+	import { getContext } from 'svelte';
+	import type { ContextUser } from '$lib/types';
 
 	let isCollapsed = $state(false);
 	let activePath = $derived(page.url.pathname);
 	let isCreationOpen = $derived(activePath.split('/')[1] === 'creation');
 	let isProfile = $derived(activePath === '/profile');
+
+	const user = getContext('user') as ContextUser;
 
 	const navItems = [
 		{ path: '/', label: 'Home', icon: Home },
@@ -210,10 +214,10 @@
 				<User class="h-8 w-8 {isProfile ? 'text-white' : 'text-slate-500'}" />
 				<div class="flex-1 overflow-hidden">
 					<p class="text-sm font-semibold {isProfile ? 'text-white' : 'text-slate-700'} truncate">
-						Leonardo
+						{$user?.username}
 					</p>
 					<p class="text-xs {isProfile ? 'text-white' : 'text-slate-500'} truncate">
-						leocpizarro@gmail.com
+						{$user?.email}
 					</p>
 				</div>
 			{/if}
